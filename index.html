@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard com Supabase Auth</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body { font-family: "Inter", sans-serif; }
+        .spinner {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-left-color: #fff;
+            border-radius: 50%;
+            width: 1.25rem;
+            height: 1.25rem;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div id="login-page" class="flex items-center justify-center h-screen bg-gray-200">
+        <div class="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">Bem-vindo!</h1>
+            <p class="text-center text-gray-500 mb-8">Faça login para acessar o painel.</p>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
+                    <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="admin@exemplo.com" />
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 font-semibold mb-2">Senha</label>
+                    <input type="password" id="password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="1234" />
+                </div>
+                <button id="login-button" type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center">
+                    <span id="login-button-text">Entrar</span>
+                    <div id="login-spinner" class="spinner hidden"></div>
+                </button>
+                <p id="login-error" class="text-red-500 text-sm mt-4 text-center hidden">Email ou senha incorretos.</p>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-page" class="hidden h-screen">
+        <aside class="w-64 bg-gray-900 text-gray-200 p-6 flex flex-col">
+            <div class="flex items-center mb-10">
+                <svg class="w-8 h-8 mr-3 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h12A2.25 2.25 0 0 0 20.25 14.25V3.75M3.75 3h16.5M3.75 3v-1.5A2.25 2.25 0 0 1 6 0h12a2.25 2.25 0 0 1 2.25 2.25v1.5m-16.5 0h16.5m-16.5 0v11.25A2.25 2.25 0 0 0 6 16.5h12a2.25 2.25 0 0 0 2.25-2.25V3.75m-16.5 0h16.5" /></svg>
+                <h1 class="text-2xl font-bold">Meu Painel</h1>
+            </div>
+            <nav class="flex-1">
+                <ul>
+                    <li class="mb-3"><a href="#" class="nav-link flex items-center p-3 rounded-lg" data-target="visao-geral"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" /></svg>Visão Geral</a></li>
+                </ul>
+            </nav>
+            <div class="mt-auto"><a href="#" id="logout-button" class="flex items-center p-3 hover:bg-gray-800 rounded-lg transition-colors"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" /></svg>Sair</a></div>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto"></main>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            // --- PARTE 1: INICIALIZAÇÃO DO SUPABASE ---
+            const { createClient } = supabase;
+            // Cole suas chaves do Supabase aqui (de Project Settings > API)
+            const SUPABASE_URL = 'https://xulgpvtmalhjpecxwvud.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1bGdwdnRtYWxoanBlY3h3dnVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE5MzMzOTYsImV4cCI6MjA2NzUwOTM5Nn0.zqXtR4wDYTt-w0mc_Pw3wxfe80tABeGMwtkBrOLhT0M';
+
+            const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+            // Seleciona todos os elementos do DOM
+            const loginPage = document.getElementById("login-page");
+            const dashboardPage = document.getElementById("dashboard-page");
+            const loginForm = document.getElementById("login-form");
+            const loginError = document.getElementById("login-error");
+            const logoutButton = document.getElementById("logout-button");
+            const loginButton = document.getElementById("login-button");
+            const loginButtonText = document.getElementById("login-button-text");
+            const loginSpinner = document.getElementById("login-spinner");
+
+            // --- PARTE 2: VERIFICAÇÃO DE SESSÃO AO CARREGAR A PÁGINA ---
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                console.log('Sessão encontrada!', session);
+                showDashboard();
+            } else {
+                console.log('Nenhuma sessão encontrada.');
+                showLoginPage();
+            }
+
+            // --- PARTE 3: LÓGICA DE LOGIN ---
+            loginForm.addEventListener("submit", async function(event) {
+                event.preventDefault();
+                setLoading(true);
+
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password,
+                });
+
+                if (error) {
+                    loginError.textContent = "Email ou senha incorretos.";
+                    loginError.classList.remove("hidden");
+                    console.error('Erro no login:', error.message);
+                } else {
+                    console.log('Login bem-sucedido!', data.user);
+                    showDashboard();
+                }
+                setLoading(false);
+            });
+
+            // --- PARTE 4: LÓGICA DE LOGOUT ---
+            logoutButton.addEventListener("click", async function(event) {
+                event.preventDefault();
+                const { error } = await supabaseClient.auth.signOut();
+                if (error) {
+                    console.error('Erro ao fazer logout:', error.message);
+                } else {
+                    showLoginPage();
+                }
+            });
+
+
+            // --- Funções auxiliares ---
+            function showDashboard() {
+                loginPage.classList.add("hidden");
+                dashboardPage.classList.remove("hidden");
+                dashboardPage.classList.add("flex");
+                // renderCharts(); // Você pode adicionar sua função de renderizar gráficos aqui
+            }
+
+            function showLoginPage() {
+                dashboardPage.classList.add("hidden");
+                dashboardPage.classList.remove("flex");
+                loginPage.classList.remove("hidden");
+                loginPage.classList.add("flex");
+            }
+            
+            function setLoading(isLoading) {
+                if(isLoading) {
+                    loginButtonText.classList.add("hidden");
+                    loginSpinner.classList.remove("hidden");
+                    loginButton.disabled = true;
+                    loginError.classList.add("hidden");
+                } else {
+                    loginButtonText.classList.remove("hidden");
+                    loginSpinner.classList.add("hidden");
+                    loginButton.disabled = false;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
