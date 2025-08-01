@@ -10,7 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script> <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
@@ -58,12 +60,23 @@
 
     <div id="dashboard-page" class="hidden h-screen">
         <aside class="w-64 bg-gray-900 text-gray-200 p-6 flex flex-col">
-            </aside>
+            <div class="flex items-center mb-10">
+                <svg class="w-8 h-8 mr-3 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h12A2.25 2.25 0 0 0 20.25 14.25V3.75M3.75 3h16.5M3.75 3v-1.5A2.25 2.25 0 0 1 6 0h12a2.25 2.25 0 0 1 2.25 2.25v1.5m-16.5 0h16.5m-16.5 0v11.25A2.25 2.25 0 0 0 6 16.5h12a2.25 2.25 0 0 0 2.25-2.25V3.75m-16.5 0h16.5" /></svg>
+                <h1 class="text-2xl font-bold">Meu Painel</h1>
+            </div>
+            <nav class="flex-1">
+                <ul>
+                    <li class="mb-3"><a href="#" class="nav-link flex items-center p-3 rounded-lg" data-target="visao-geral"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" /></svg>Visão Geral</a></li>
+                    <li class="mb-3"><a href="#" class="nav-link flex items-center p-3 hover:bg-gray-800 rounded-lg transition-colors" data-target="analises"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h15.75c.621 0 1.125.504 1.125 1.125v6.75a2.25 2.25 0 0 1-2.25 2.25H6.375a2.25 2.25 0 0 1-2.25-2.25v-6.75Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12v-2.25A2.25 2.25 0 0 0 17.25 7.5H6.75A2.25 2.25 0 0 0 4.5 9.75v2.25" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 15.75a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15.75a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5a.75.75 0 0 1 .75-.75Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 15.75a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75Z" /></svg>Análises</a></li>
+                    <li class="mb-3"><a href="#" class="nav-link flex items-center p-3 hover:bg-gray-800 rounded-lg transition-colors" data-target="configuracoes"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.75-5.468 9.094 9.094 0 0 0-3.75-5.468m-12 10.936A9.094 9.094 0 0 1 6 13.252a9.094 9.094 0 0 1-3.75-5.468m12 10.936a9.094 9.094 0 0 1-3.75 5.468m-1.292-12.936a9.094 9.094 0 0 1-5.416 0m12.708 0a9.094 9.094 0 0 1-5.416 0M6 13.252a9.094 9.094 0 0 0-3.75 5.468m12-10.936a9.094 9.094 0 0 0-3.75 5.468" /></svg>Configurações</a></li>
+                </ul>
+            </nav>
+            <div class="mt-auto"><a href="#" id="logout-button" class="flex items-center p-3 hover:bg-gray-800 rounded-lg transition-colors"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" /></svg>Sair</a></div>
+        </aside>
 
         <main class="flex-1 p-8 overflow-y-auto">
             <div id="visao-geral-content" class="page-content">
                 <h1 class="text-4xl font-bold text-gray-800 mb-8">Visão Geral</h1>
-
                 <section class="bg-white p-4 rounded-2xl shadow-lg mb-8 flex items-center gap-4 flex-wrap">
                     <div>
                         <label for="date-range-picker" class="block text-sm font-medium text-gray-700 mb-1">Período</label>
@@ -75,10 +88,10 @@
                 </section>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Receita Total</p><p id="kpi-receita" class="text-3xl font-bold text-gray-800">R$ 0,00</p></div>
-                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Agendamentos</p><p id="kpi-agendamentos" class="text-3xl font-bold text-gray-800">0</p></div>
-                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Novos Clientes</p><p id="kpi-clientes" class="text-3xl font-bold text-gray-800">0</p></div>
-                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Taxa de Conversão</p><p id="kpi-conversao" class="text-3xl font-bold text-gray-800">0%</p></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Receita Total</p><p id="kpi-receita" class="text-3xl font-bold text-gray-800">Carregando...</p></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Agendamentos</p><p id="kpi-agendamentos" class="text-3xl font-bold text-gray-800">Carregando...</p></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Novos Clientes</p><p id="kpi-clientes" class="text-3xl font-bold text-gray-800">Carregando...</p></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Taxa de Conversão</p><p id="kpi-conversao" class="text-3xl font-bold text-gray-800">Carregando...</p></div>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
                     <div class="lg:col-span-3 bg-white p-6 rounded-2xl shadow-lg">
@@ -91,6 +104,20 @@
                     </div>
                 </div>
             </div>
+            <div id="analises-content" class="page-content hidden">
+                 <h1 class="text-4xl font-bold text-gray-800 mb-8">Análises Detalhadas</h1>
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4">Página de Análises</h2>
+                    <p class="text-gray-600">Esta página está em construção.</p>
+                </div>
+            </div>
+            <div id="configuracoes-content" class="page-content hidden">
+                <h1 class="text-4xl font-bold text-gray-800 mb-8">Configurações</h1>
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4">Página de Configurações</h2>
+                    <p class="text-gray-600 mb-6">Esta página está em construção.</p>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -98,15 +125,22 @@
         document.addEventListener("DOMContentLoaded", async function() {
             // --- INICIALIZAÇÃO DO SUPABASE ---
             const { createClient } = supabase;
-            const SUPABASE_URL = 'https://xulgpvtmalhjpecxwvud.supabase.co';
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1bGdwdnRtYWxoanBlY3h3dnVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE5MzMzOTYsImV4cCI6MjA2NzUwOTM5Nn0.zqXtR4wDYTt-w0mc_Pw3wxfe80tABeGMwtkBrOLhT0M';
+            const SUPABASE_URL = 'SUA_URL_DO_PROJETO_SUPABASE';
+            const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANON_SUPABASE';
             const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
             // Seleção de elementos do DOM
             const loginPage = document.getElementById("login-page");
             const dashboardPage = document.getElementById("dashboard-page");
+            const loginForm = document.getElementById("login-form");
+            const loginError = document.getElementById("login-error");
+            const logoutButton = document.getElementById("logout-button");
+            const loginButton = document.getElementById("login-button");
+            const loginButtonText = document.getElementById("login-button-text");
+            const loginSpinner = document.getElementById("login-spinner");
+            const navLinks = document.querySelectorAll(".nav-link");
+            const contentSections = document.querySelectorAll(".page-content");
             const filterButton = document.getElementById("filter-button");
-            // ...outros seletores
 
             // Variáveis globais para gráficos e seletor de data
             let areaChart = null;
@@ -120,7 +154,21 @@
                 dashboardPage.classList.add("flex");
                 initializeDashboard();
             }
+
+            function showLoginPage() {
+                dashboardPage.classList.add("hidden");
+                dashboardPage.classList.remove("flex");
+                loginPage.classList.remove("hidden");
+                loginPage.classList.add("flex");
+            }
             
+            function setLoading(isLoading) {
+                loginButtonText.classList.toggle("hidden", isLoading);
+                loginSpinner.classList.toggle("hidden", !isLoading);
+                loginButton.disabled = isLoading;
+                if (isLoading) loginError.classList.add("hidden");
+            }
+
             // --- INICIALIZAÇÃO DO DASHBOARD (só acontece depois do login) ---
             function initializeDashboard() {
                 const today = new Date();
@@ -128,9 +176,9 @@
                 
                 datePicker = flatpickr("#date-range-picker", {
                     mode: "range",
-                    dateFormat: "Y-m-d", // Formato para a API: AAAA-MM-DD
+                    dateFormat: "Y-m-d", 
                     defaultDate: [thirtyDaysAgo, today],
-                    "locale": "pt" // Tradução para Português
+                    "locale": "pt"
                 });
 
                 renderCharts();
@@ -138,41 +186,35 @@
                 filterButton.addEventListener("click", updateDashboardWithData);
             }
             
-            // --- ATUALIZAÇÃO DOS DADOS (MODIFICADO) ---
+            // --- ATUALIZAÇÃO DOS DADOS ---
             async function updateDashboardWithData() {
                 if (!datePicker || datePicker.selectedDates.length < 2) {
-                    console.log("Aguardando seleção de data válida.");
+                     // Isso acontece na primeira carga, antes do flatpickr estar pronto.
+                     // A chamada inicial em initializeDashboard vai popular os dados.
                     return;
                 }
                 
                 const [startDate, endDate] = datePicker.selectedDates;
-                
-                // Formata as datas para o formato YYYY-MM-DD
                 const formattedStartDate = startDate.toISOString().split('T')[0];
                 const formattedEndDate = endDate.toISOString().split('T')[0];
 
-                console.log(`Buscando dados entre ${formattedStartDate} e ${formattedEndDate}`);
-
-                // Mostra um estado de carregamento (opcional, mas bom para UX)
+                // Mostra um estado de carregamento nos KPIs
                 document.getElementById('kpi-agendamentos').textContent = '...';
                 document.getElementById('kpi-clientes').textContent = '...';
                 document.getElementById('kpi-conversao').textContent = '...';
+                document.getElementById('kpi-receita').textContent = '...';
                 
                 try {
                     const response = await fetch('https://dinastia-n8n-webhook.5nw2ap.easypanel.host/webhook/dashboard/dados', {
-                        method: 'POST', // Usando POST para enviar corpo
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             "initial_date": formattedStartDate,
                             "final_date": formattedEndDate
                         })
                     });
 
-                    if (!response.ok) {
-                        throw new Error(`Erro na API: ${response.statusText}`);
-                    }
+                    if (!response.ok) throw new Error(`Erro na API: ${response.statusText}`);
 
                     const data = await response.json();
 
@@ -180,28 +222,24 @@
                     document.getElementById('kpi-agendamentos').textContent = data.total_clientes_agendaram;
                     document.getElementById('kpi-clientes').textContent = data.total_clientes_convertidos;
                     document.getElementById('kpi-conversao').textContent = `${parseFloat(data.taxa_conversao_percentual).toFixed(2)}%`.replace('.', ',');
+                    document.getElementById('kpi-receita').textContent = "N/A"; // API não fornece este dado ainda
 
                     // NOTA: A API atual não retorna dados para os gráficos.
                     // Eles continuarão com dados de simulação por enquanto.
-                    // No futuro, a API poderia retornar arrays de dados para os gráficos.
                     areaChart.updateSeries([{ data: Array.from({ length: 6 }, () => Math.floor(Math.random() * 150)) }]);
                     barChart.updateSeries([{ data: Array.from({ length: 5 }, () => Math.floor(Math.random() * 500)) }]);
 
                 } catch (error) {
                     console.error("Falha ao buscar dados do dashboard:", error);
-                    alert("Não foi possível carregar os dados do dashboard. Verifique o console para mais detalhes.");
-                    // Reverte para um estado de erro
+                    alert("Não foi possível carregar os dados do dashboard.");
                     document.getElementById('kpi-agendamentos').textContent = 'Erro';
                     document.getElementById('kpi-clientes').textContent = 'Erro';
                     document.getElementById('kpi-conversao').textContent = 'Erro';
+                    document.getElementById('kpi-receita').textContent = 'Erro';
                 }
             }
 
-            // --- VERIFICAÇÃO DE SESSÃO, LOGIN, LOGOUT E NAVEGAÇÃO ---
-            // (O resto do seu script continua aqui, sem alterações)
-            const loginForm = document.getElementById("login-form");
-            const logoutButton = document.getElementById("logout-button");
-
+            // --- VERIFICAÇÃO DE SESSÃO AO CARREGAR A PÁGINA ---
             try {
                 const { data: { session } } = await supabaseClient.auth.getSession();
                 if (session) {
@@ -209,16 +247,57 @@
                 } else {
                     showLoginPage();
                 }
-            } catch(e) { /* ... */ }
+            } catch (e) {
+                console.error("Erro ao inicializar ou obter sessão. Verifique suas chaves do Supabase.", e);
+                showLoginPage();
+            }
 
-            loginForm.addEventListener("submit", async function(event) { /* ... */ });
-            logoutButton.addEventListener("click", async function(event) { /* ... */ });
-            
-            function showLoginPage() { /* ... */ }
-            function setLoading(isLoading) { /* ... */ }
-            function setActiveTab(targetId) { /* ... */ }
-            document.querySelectorAll(".nav-link").forEach(link => { /* ... */ });
+            // --- LÓGICA DE LOGIN ---
+            loginForm.addEventListener("submit", async function(event) {
+                event.preventDefault();
+                setLoading(true);
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email: email, password: password });
+                if (error) {
+                    loginError.textContent = "Email ou senha incorretos.";
+                    loginError.classList.remove("hidden");
+                } else {
+                    showDashboard();
+                }
+                setLoading(false);
+            });
 
+            // --- LÓGICA DE LOGOUT ---
+            logoutButton.addEventListener("click", async function(event) {
+                event.preventDefault();
+                await supabaseClient.auth.signOut();
+                showLoginPage();
+            });
+
+            // --- FUNÇÕES DE NAVEGAÇÃO E GRÁFICOS ---
+            function setActiveTab(targetId) {
+                contentSections.forEach((section) => { section.classList.add("hidden"); });
+                const targetSection = document.getElementById(targetId + "-content");
+                if (targetSection) { targetSection.classList.remove("hidden"); }
+                navLinks.forEach((navLink) => {
+                    navLink.classList.remove("bg-gray-700", "text-white", "font-semibold");
+                    navLink.classList.add("hover:bg-gray-800");
+                });
+                const activeLink = document.querySelector(`.nav-link[data-target="${targetId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add("bg-gray-700", "text-white", "font-semibold");
+                    activeLink.classList.remove("hover:bg-gray-800");
+                }
+            }
+
+            navLinks.forEach((link) => {
+                link.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    const targetId = this.dataset.target;
+                    setActiveTab(targetId);
+                });
+            });
 
             function renderCharts() {
                 const areaChartEl = document.querySelector("#area-chart");
