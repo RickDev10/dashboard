@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard com Supabase Auth</title>
+    <title>Dashboard Final com Supabase</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,7 +22,7 @@
             height: 1.25rem;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes spin { to { transform: rotate(306deg); } }
     </style>
 </head>
 
@@ -35,11 +34,11 @@
             <form id="login-form">
                 <div class="mb-4">
                     <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
-                    <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="admin@exemplo.com" />
+                    <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="seu@email.com" />
                 </div>
                 <div class="mb-6">
                     <label for="password" class="block text-gray-700 font-semibold mb-2">Senha</label>
-                    <input type="password" id="password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" value="1234" />
+                    <input type="password" id="password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••" />
                 </div>
                 <button id="login-button" type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center">
                     <span id="login-button-text">Entrar</span>
@@ -86,7 +85,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="analises-content" class="page-content hidden">
                 <h1 class="text-4xl font-bold text-gray-800 mb-8">Análises Detalhadas</h1>
                 <div class="bg-white p-8 rounded-2xl shadow-lg">
@@ -94,7 +92,6 @@
                     <p class="text-gray-600">Aqui você pode adicionar gráficos e tabelas mais complexos.</p>
                 </div>
             </div>
-
             <div id="configuracoes-content" class="page-content hidden">
                 <h1 class="text-4xl font-bold text-gray-800 mb-8">Configurações</h1>
                 <div class="bg-white p-8 rounded-2xl shadow-lg">
@@ -109,6 +106,7 @@
         document.addEventListener("DOMContentLoaded", async function() {
             // --- PARTE 1: INICIALIZAÇÃO DO SUPABASE ---
             const { createClient } = supabase;
+            // PREENCHA SUAS CHAVES DO SUPABASE AQUI (de Project Settings > API)
             const SUPABASE_URL = 'SUA_URL_DO_PROJETO_SUPABASE';
             const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANON_SUPABASE';
             const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -145,22 +143,27 @@
                 loginButtonText.classList.toggle("hidden", isLoading);
                 loginSpinner.classList.toggle("hidden", !isLoading);
                 loginButton.disabled = isLoading;
-                if(isLoading) loginError.classList.add("hidden");
+                if (isLoading) loginError.classList.add("hidden");
             }
 
             // --- VERIFICAÇÃO DE SESSÃO AO CARREGAR A PÁGINA ---
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            if (session) {
-                showDashboard();
-            } else {
+            try {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                if (session) {
+                    showDashboard();
+                } else {
+                    showLoginPage();
+                }
+            } catch (e) {
+                console.error("Erro ao inicializar ou obter sessão:", e);
                 showLoginPage();
             }
+
 
             // --- LÓGICA DE LOGIN ---
             loginForm.addEventListener("submit", async function(event) {
                 event.preventDefault();
                 setLoading(true);
-
                 const email = document.getElementById("email").value;
                 const password = document.getElementById("password").value;
 
@@ -187,13 +190,9 @@
 
             // --- FUNÇÕES DE NAVEGAÇÃO E GRÁFICOS ---
             function setActiveTab(targetId) {
-                contentSections.forEach((section) => {
-                    section.classList.add("hidden");
-                });
+                contentSections.forEach((section) => { section.classList.add("hidden"); });
                 const targetSection = document.getElementById(targetId + "-content");
-                if (targetSection) {
-                    targetSection.classList.remove("hidden");
-                }
+                if (targetSection) { targetSection.classList.remove("hidden"); }
                 navLinks.forEach((navLink) => {
                     navLink.classList.remove("bg-gray-700", "text-white", "font-semibold");
                     navLink.classList.add("hover:bg-gray-800");
@@ -216,7 +215,6 @@
             function renderCharts() {
                 const areaChartEl = document.querySelector("#area-chart");
                 if (areaChartEl && areaChartEl.childElementCount > 0) return;
-
                 if (areaChartEl) {
                     const areaChartOptions = {
                         series: [{ name: "Vendas", data: [3100, 4000, 2800, 5100, 4200, 10900] }],
