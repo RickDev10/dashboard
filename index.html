@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard Final com Supabase</title>
+    <title>Dashboard de Agendamentos</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,7 +25,13 @@
             height: 1.25rem;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin { to { transform: rotate(306deg); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        /* Estilo para o campo de data */
+        .flatpickr-input {
+            background-color: white;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+        }
     </style>
 </head>
 
@@ -51,198 +60,152 @@
 
     <div id="dashboard-page" class="hidden h-screen">
         <aside class="w-64 bg-gray-900 text-gray-200 p-6 flex flex-col">
-            <div class="flex items-center mb-10">
-                <svg class="w-8 h-8 mr-3 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h12A2.25 2.25 0 0 0 20.25 14.25V3.75M3.75 3h16.5M3.75 3v-1.5A2.25 2.25 0 0 1 6 0h12a2.25 2.25 0 0 1 2.25 2.25v1.5m-16.5 0h16.5m-16.5 0v11.25A2.25 2.25 0 0 0 6 16.5h12a2.25 2.25 0 0 0 2.25-2.25V3.75m-16.5 0h16.5" /></svg>
-                <h1 class="text-2xl font-bold">Meu Painel</h1>
-            </div>
-            <nav class="flex-1">
-                <ul>
-                    <li class="mb-3"><a href="#" class="nav-link flex items-center p-3 rounded-lg" data-target="visao-geral"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" /></svg>Visão Geral</a></li>
-                    <li class="mb-3"><a href="#" class="nav-link flex items-center p-3 hover:bg-gray-800 rounded-lg transition-colors" data-target="analises"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h15.75c.621 0 1.125.504 1.125 1.125v6.75a2.25 2.25 0 0 1-2.25 2.25H6.375a2.25 2.25 0 0 1-2.25-2.25v-6.75Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12v-2.25A2.25 2.25 0 0 0 17.25 7.5H6.75A2.25 2.25 0 0 0 4.5 9.75v2.25" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 15.75a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15.75a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5a.75.75 0 0 1 .75-.75Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 15.75a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75Z" /></svg>Análises</a></li>
-                    <li class="mb-3"><a href="#" class="nav-link flex items-center p-3 hover:bg-gray-800 rounded-lg transition-colors" data-target="configuracoes"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.75-5.468 9.094 9.094 0 0 0-3.75-5.468m-12 10.936A9.094 9.094 0 0 1 6 13.252a9.094 9.094 0 0 1-3.75-5.468m12 10.936a9.094 9.094 0 0 1-3.75 5.468m-1.292-12.936a9.094 9.094 0 0 1-5.416 0m12.708 0a9.094 9.094 0 0 1-5.416 0M6 13.252a9.094 9.094 0 0 0-3.75 5.468m12-10.936a9.094 9.094 0 0 0-3.75 5.468" /></svg>Configurações</a></li>
-                </ul>
-            </nav>
-            <div class="mt-auto"><a href="#" id="logout-button" class="flex items-center p-3 hover:bg-gray-800 rounded-lg transition-colors"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" /></svg>Sair</a></div>
-        </aside>
+            </aside>
 
         <main class="flex-1 p-8 overflow-y-auto">
             <div id="visao-geral-content" class="page-content">
                 <h1 class="text-4xl font-bold text-gray-800 mb-8">Visão Geral</h1>
+
+                <section class="bg-white p-4 rounded-2xl shadow-lg mb-8 flex items-center gap-4">
+                    <div>
+                        <label for="date-range-picker" class="block text-sm font-medium text-gray-700 mb-1">Período</label>
+                        <input id="date-range-picker" class="p-2" type="text" placeholder="Selecione o período...">
+                    </div>
+                    <button id="filter-button" class="mt-5 bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">
+                        Filtrar
+                    </button>
+                </section>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Receita Total</p><p class="text-3xl font-bold text-gray-800">R$ 48.597</p></div>
-                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Vendas</p><p class="text-3xl font-bold text-gray-800">1.234</p></div>
-                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Novos Clientes</p><p class="text-3xl font-bold text-gray-800">89</p></div>
-                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Taxa Conversão</p><p class="text-3xl font-bold text-gray-800">12,5%</p></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Receita Total</p><p id="kpi-receita" class="text-3xl font-bold text-gray-800">R$ 48.597</p></div>
+                    
+                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Agendamentos</p><p id="kpi-agendamentos" class="text-3xl font-bold text-gray-800">1.234</p></div>
+                    
+                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Novos Clientes</p><p id="kpi-clientes" class="text-3xl font-bold text-gray-800">89</p></div>
+                    
+                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Taxa de Conversão</p><p id="kpi-conversao" class="text-3xl font-bold text-gray-800">12,5%</p></div>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                    <div class="lg:col-span-3 bg-white p-6 rounded-2xl shadow-lg">
-                        <h2 class="text-xl font-semibold text-gray-700 mb-4">Performance de Vendas</h2>
+                    <div class="lg-col-span-3 bg-white p-6 rounded-2xl shadow-lg">
+                        <h2 class="text-xl font-semibold text-gray-700 mb-4">Agendamentos Mensais</h2>
                         <div id="area-chart"></div>
                     </div>
-                    <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-lg">
-                        <h2 class="text-xl font-semibold text-gray-700 mb-4">Categorias Mais Vendidas</h2>
+                    <div class="lg-col-span-2 bg-white p-6 rounded-2xl shadow-lg">
+                        <h2 class="text-xl font-semibold text-gray-700 mb-4">Principais Serviços Agendados</h2>
                         <div id="bar-chart"></div>
                     </div>
                 </div>
             </div>
-            <div id="analises-content" class="page-content hidden">
-                <h1 class="text-4xl font-bold text-gray-800 mb-8">Análises Detalhadas</h1>
-                <div class="bg-white p-8 rounded-2xl shadow-lg">
-                    <h2 class="text-2xl font-semibold mb-4">Página de Análises</h2>
-                    <p class="text-gray-600">Aqui você pode adicionar gráficos e tabelas mais complexos.</p>
-                </div>
-            </div>
-            <div id="configuracoes-content" class="page-content hidden">
-                <h1 class="text-4xl font-bold text-gray-800 mb-8">Configurações</h1>
-                <div class="bg-white p-8 rounded-2xl shadow-lg">
-                    <h2 class="text-2xl font-semibold mb-4">Configurações da Conta</h2>
-                    <p class="text-gray-600 mb-6">Ajuste as preferências da sua conta.</p>
-                </div>
-            </div>
-        </main>
+            </main>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", async function() {
-            // --- PARTE 1: INICIALIZAÇÃO DO SUPABASE ---
+            // --- INICIALIZAÇÃO DO SUPABASE ---
             const { createClient } = supabase;
-            // PREENCHA SUAS CHAVES DO SUPABASE AQUI (de Project Settings > API)
-            const SUPABASE_URL = 'https://xulgpvtmalhjpecxwvud.supabase.co';
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1bGdwdnRtYWxoanBlY3h3dnVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE5MzMzOTYsImV4cCI6MjA2NzUwOTM5Nn0.zqXtR4wDYTt-w0mc_Pw3wxfe80tABeGMwtkBrOLhT0M';
+            const SUPABASE_URL = 'SUA_URL_DO_PROJETO_SUPABASE';
+            const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANON_SUPABASE';
             const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-            // Seleciona todos os elementos do DOM
+            // Seleção dos elementos do DOM
             const loginPage = document.getElementById("login-page");
             const dashboardPage = document.getElementById("dashboard-page");
-            const loginForm = document.getElementById("login-form");
-            const loginError = document.getElementById("login-error");
-            const logoutButton = document.getElementById("logout-button");
-            const loginButton = document.getElementById("login-button");
-            const loginButtonText = document.getElementById("login-button-text");
-            const loginSpinner = document.getElementById("login-spinner");
-            const navLinks = document.querySelectorAll(".nav-link");
-            const contentSections = document.querySelectorAll(".page-content");
+            const filterButton = document.getElementById("filter-button");
+            // ...outros seletores
 
-            // --- FUNÇÕES DE CONTROLE DE TELA E ESTADO ---
+            // Variáveis globais para os gráficos
+            let areaChart = null;
+            let barChart = null;
+            
+            // --- INICIALIZAÇÃO DO SELETOR DE DATA ---
+            const today = new Date();
+            const thirtyDaysAgo = new Date(new Date().setDate(today.getDate() - 30));
+
+            const datePicker = flatpickr("#date-range-picker", {
+                mode: "range",
+                dateFormat: "d/m/Y",
+                defaultDate: [thirtyDaysAgo, today] // Define o período padrão
+            });
+
+            // --- Lógica de verificação de sessão, login e logout ---
+            // (O código de autenticação do Supabase continua o mesmo aqui)
+
+            // --- LÓGICA DO FILTRO ---
+            filterButton.addEventListener("click", () => {
+                const selectedDates = datePicker.selectedDates;
+                if (selectedDates.length === 2) {
+                    const startDate = selectedDates[0];
+                    const endDate = selectedDates[1];
+                    console.log("Filtrando dados entre:", startDate, "e", endDate);
+                    
+                    // Em um app real, aqui você chamaria uma função para buscar os dados no Supabase
+                    // passando as datas de início e fim.
+                    // Ex: const novosDados = await buscaDadosNoSupabase(startDate, endDate);
+                    
+                    // Por enquanto, vamos simular a atualização com dados aleatórios
+                    updateDashboardWithNewData();
+                } else {
+                    alert("Por favor, selecione um período de início e fim.");
+                }
+            });
+
+            function updateDashboardWithNewData() {
+                // Simula novos dados para os KPIs
+                document.getElementById('kpi-receita').textContent = `R$ ${(Math.random() * 50000).toFixed(2)}`;
+                document.getElementById('kpi-agendamentos').textContent = Math.floor(Math.random() * 1500);
+                document.getElementById('kpi-clientes').textContent = Math.floor(Math.random() * 100);
+                document.getElementById('kpi-conversao').textContent = `${(Math.random() * 20).toFixed(1)}%`;
+
+                // Simula novos dados para os gráficos
+                if (areaChart && barChart) {
+                    areaChart.updateSeries([{
+                        name: 'Agendamentos',
+                        data: Array.from({length: 6}, () => Math.floor(Math.random() * 150))
+                    }]);
+                    
+                    barChart.updateSeries([{
+                        name: 'Nº de Agendamentos',
+                        data: Array.from({length: 5}, () => Math.floor(Math.random() * 500))
+                    }]);
+                }
+            }
+
             function showDashboard() {
                 loginPage.classList.add("hidden");
                 dashboardPage.classList.remove("hidden");
                 dashboardPage.classList.add("flex");
-                setActiveTab("visao-geral");
-                renderCharts();
+                renderCharts(); // Renderiza os gráficos com os dados iniciais
             }
-
-            function showLoginPage() {
-                dashboardPage.classList.add("hidden");
-                dashboardPage.classList.remove("flex");
-                loginPage.classList.remove("hidden");
-                loginPage.classList.add("flex");
-            }
-
-            function setLoading(isLoading) {
-                loginButtonText.classList.toggle("hidden", isLoading);
-                loginSpinner.classList.toggle("hidden", !isLoading);
-                loginButton.disabled = isLoading;
-                if (isLoading) loginError.classList.add("hidden");
-            }
-
-            // --- VERIFICAÇÃO DE SESSÃO AO CARREGAR A PÁGINA ---
-            try {
-                const { data: { session } } = await supabaseClient.auth.getSession();
-                if (session) {
-                    showDashboard();
-                } else {
-                    showLoginPage();
-                }
-            } catch (e) {
-                console.error("Erro ao inicializar ou obter sessão:", e);
-                showLoginPage();
-            }
-
-
-            // --- LÓGICA DE LOGIN ---
-            loginForm.addEventListener("submit", async function(event) {
-                event.preventDefault();
-                setLoading(true);
-                const email = document.getElementById("email").value;
-                const password = document.getElementById("password").value;
-
-                const { data, error } = await supabaseClient.auth.signInWithPassword({
-                    email: email,
-                    password: password,
-                });
-
-                if (error) {
-                    loginError.textContent = "Email ou senha incorretos.";
-                    loginError.classList.remove("hidden");
-                } else {
-                    showDashboard();
-                }
-                setLoading(false);
-            });
-
-            // --- LÓGICA DE LOGOUT ---
-            logoutButton.addEventListener("click", async function(event) {
-                event.preventDefault();
-                await supabaseClient.auth.signOut();
-                showLoginPage();
-            });
-
-            // --- FUNÇÕES DE NAVEGAÇÃO E GRÁFICOS ---
-            function setActiveTab(targetId) {
-                contentSections.forEach((section) => { section.classList.add("hidden"); });
-                const targetSection = document.getElementById(targetId + "-content");
-                if (targetSection) { targetSection.classList.remove("hidden"); }
-                navLinks.forEach((navLink) => {
-                    navLink.classList.remove("bg-gray-700", "text-white", "font-semibold");
-                    navLink.classList.add("hover:bg-gray-800");
-                });
-                const activeLink = document.querySelector(`.nav-link[data-target="${targetId}"]`);
-                if (activeLink) {
-                    activeLink.classList.add("bg-gray-700", "text-white", "font-semibold");
-                    activeLink.classList.remove("hover:bg-gray-800");
-                }
-            }
-
-            navLinks.forEach((link) => {
-                link.addEventListener("click", function(event) {
-                    event.preventDefault();
-                    const targetId = this.dataset.target;
-                    setActiveTab(targetId);
-                });
-            });
 
             function renderCharts() {
+                // ... (código para inicializar os gráficos, similar ao anterior)
                 const areaChartEl = document.querySelector("#area-chart");
-                if (areaChartEl && areaChartEl.childElementCount > 0) return;
                 if (areaChartEl) {
                     const areaChartOptions = {
-                        series: [{ name: "Vendas", data: [3100, 4000, 2800, 5100, 4200, 10900] }],
-                        chart: { height: 350, type: "area", toolbar: { show: false }, zoom: { enabled: false } },
-                        dataLabels: { enabled: false }, stroke: { curve: "smooth" },
-                        xaxis: { categories: ["Fev", "Mar", "Abr", "Mai", "Jun", "Jul"] },
-                        tooltip: { x: { format: "MMM" }, y: { formatter: (val) => "R$ " + val.toFixed(2).replace(".", ",") } },
-                        colors: ["#3B82F6"],
+                        series: [{ name: "Agendamentos", data: [31, 40, 28, 51, 42, 109] }],
+                        chart: { height: 350, type: "area", toolbar: { show: false } },
+                        // ...outras opções
                     };
-                    const areaChart = new ApexCharts(areaChartEl, areaChartOptions);
+                    areaChart = new ApexCharts(areaChartEl, areaChartOptions);
                     areaChart.render();
                 }
 
                 const barChartEl = document.querySelector("#bar-chart");
                 if (barChartEl) {
-                    const barChartOptions = {
-                        series: [{ name: "Unidades Vendidas", data: [400, 430, 448, 470, 540] }],
+                     const barChartOptions = {
+                        series: [{ name: "Nº de Agendamentos", data: [400, 330, 248, 170, 140] }],
                         chart: { type: "bar", height: 350, toolbar: { show: false } },
-                        plotOptions: { bar: { borderRadius: 4, horizontal: true } },
-                        dataLabels: { enabled: false },
-                        xaxis: { categories: ["Eletrônicos", "Moda", "Casa e Jardim", "Livros", "Esportes"] },
-                        colors: ["#10B981"],
-                        tooltip: { y: { formatter: (val) => val + " unidades" } },
+                        xaxis: { categories: ["Corte de Cabelo", "Manicure", "Pedicure", "Limpeza de Pele", "Massagem"] },
+                        // ...outras opções
                     };
-                    const barChart = new ApexCharts(barChartEl, barChartOptions);
+                    barChart = new ApexCharts(barChartEl, barChartOptions);
                     barChart.render();
                 }
             }
+            
+            // O resto do seu script de autenticação, navegação, etc.
+            // (cole o script completo que já funcionava aqui)
+
         });
     </script>
 </body>
