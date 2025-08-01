@@ -59,21 +59,58 @@
             <nav class="flex-1">
                 <ul>
                     <li class="mb-3"><a href="#" class="nav-link flex items-center p-3 rounded-lg" data-target="visao-geral"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" /></svg>Visão Geral</a></li>
+                    <li class="mb-3"><a href="#" class="nav-link flex items-center p-3 hover:bg-gray-800 rounded-lg transition-colors" data-target="analises"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h15.75c.621 0 1.125.504 1.125 1.125v6.75a2.25 2.25 0 0 1-2.25 2.25H6.375a2.25 2.25 0 0 1-2.25-2.25v-6.75Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12v-2.25A2.25 2.25 0 0 0 17.25 7.5H6.75A2.25 2.25 0 0 0 4.5 9.75v2.25" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 15.75a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15.75a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5a.75.75 0 0 1 .75-.75Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 15.75a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75Z" /></svg>Análises</a></li>
+                    <li class="mb-3"><a href="#" class="nav-link flex items-center p-3 hover:bg-gray-800 rounded-lg transition-colors" data-target="configuracoes"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.75-5.468 9.094 9.094 0 0 0-3.75-5.468m-12 10.936A9.094 9.094 0 0 1 6 13.252a9.094 9.094 0 0 1-3.75-5.468m12 10.936a9.094 9.094 0 0 1-3.75 5.468m-1.292-12.936a9.094 9.094 0 0 1-5.416 0m12.708 0a9.094 9.094 0 0 1-5.416 0M6 13.252a9.094 9.094 0 0 0-3.75 5.468m12-10.936a9.094 9.094 0 0 0-3.75 5.468" /></svg>Configurações</a></li>
                 </ul>
             </nav>
             <div class="mt-auto"><a href="#" id="logout-button" class="flex items-center p-3 hover:bg-gray-800 rounded-lg transition-colors"><svg class="w-6 h-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" /></svg>Sair</a></div>
         </aside>
-        <main class="flex-1 p-8 overflow-y-auto"></main>
+
+        <main class="flex-1 p-8 overflow-y-auto">
+            <div id="visao-geral-content" class="page-content">
+                <h1 class="text-4xl font-bold text-gray-800 mb-8">Visão Geral</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Receita Total</p><p class="text-3xl font-bold text-gray-800">R$ 48.597</p></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Vendas</p><p class="text-3xl font-bold text-gray-800">1.234</p></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Novos Clientes</p><p class="text-3xl font-bold text-gray-800">89</p></div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg"><p class="text-gray-500 text-lg">Taxa Conversão</p><p class="text-3xl font-bold text-gray-800">12,5%</p></div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                    <div class="lg:col-span-3 bg-white p-6 rounded-2xl shadow-lg">
+                        <h2 class="text-xl font-semibold text-gray-700 mb-4">Performance de Vendas</h2>
+                        <div id="area-chart"></div>
+                    </div>
+                    <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-lg">
+                        <h2 class="text-xl font-semibold text-gray-700 mb-4">Categorias Mais Vendidas</h2>
+                        <div id="bar-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="analises-content" class="page-content hidden">
+                <h1 class="text-4xl font-bold text-gray-800 mb-8">Análises Detalhadas</h1>
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4">Página de Análises</h2>
+                    <p class="text-gray-600">Aqui você pode adicionar gráficos e tabelas mais complexos.</p>
+                </div>
+            </div>
+
+            <div id="configuracoes-content" class="page-content hidden">
+                <h1 class="text-4xl font-bold text-gray-800 mb-8">Configurações</h1>
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4">Configurações da Conta</h2>
+                    <p class="text-gray-600 mb-6">Ajuste as preferências da sua conta.</p>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", async function() {
             // --- PARTE 1: INICIALIZAÇÃO DO SUPABASE ---
             const { createClient } = supabase;
-            // Cole suas chaves do Supabase aqui (de Project Settings > API)
-            const SUPABASE_URL = 'https://xulgpvtmalhjpecxwvud.supabase.co';
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1bGdwdnRtYWxoanBlY3h3dnVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE5MzMzOTYsImV4cCI6MjA2NzUwOTM5Nn0.zqXtR4wDYTt-w0mc_Pw3wxfe80tABeGMwtkBrOLhT0M';
-
+            const SUPABASE_URL = 'SUA_URL_DO_PROJETO_SUPABASE';
+            const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANON_SUPABASE';
             const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
             // Seleciona todos os elementos do DOM
@@ -85,18 +122,41 @@
             const loginButton = document.getElementById("login-button");
             const loginButtonText = document.getElementById("login-button-text");
             const loginSpinner = document.getElementById("login-spinner");
+            const navLinks = document.querySelectorAll(".nav-link");
+            const contentSections = document.querySelectorAll(".page-content");
 
-            // --- PARTE 2: VERIFICAÇÃO DE SESSÃO AO CARREGAR A PÁGINA ---
+            // --- FUNÇÕES DE CONTROLE DE TELA E ESTADO ---
+            function showDashboard() {
+                loginPage.classList.add("hidden");
+                dashboardPage.classList.remove("hidden");
+                dashboardPage.classList.add("flex");
+                setActiveTab("visao-geral");
+                renderCharts();
+            }
+
+            function showLoginPage() {
+                dashboardPage.classList.add("hidden");
+                dashboardPage.classList.remove("flex");
+                loginPage.classList.remove("hidden");
+                loginPage.classList.add("flex");
+            }
+
+            function setLoading(isLoading) {
+                loginButtonText.classList.toggle("hidden", isLoading);
+                loginSpinner.classList.toggle("hidden", !isLoading);
+                loginButton.disabled = isLoading;
+                if(isLoading) loginError.classList.add("hidden");
+            }
+
+            // --- VERIFICAÇÃO DE SESSÃO AO CARREGAR A PÁGINA ---
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (session) {
-                console.log('Sessão encontrada!', session);
                 showDashboard();
             } else {
-                console.log('Nenhuma sessão encontrada.');
                 showLoginPage();
             }
 
-            // --- PARTE 3: LÓGICA DE LOGIN ---
+            // --- LÓGICA DE LOGIN ---
             loginForm.addEventListener("submit", async function(event) {
                 event.preventDefault();
                 setLoading(true);
@@ -112,51 +172,77 @@
                 if (error) {
                     loginError.textContent = "Email ou senha incorretos.";
                     loginError.classList.remove("hidden");
-                    console.error('Erro no login:', error.message);
                 } else {
-                    console.log('Login bem-sucedido!', data.user);
                     showDashboard();
                 }
                 setLoading(false);
             });
 
-            // --- PARTE 4: LÓGICA DE LOGOUT ---
+            // --- LÓGICA DE LOGOUT ---
             logoutButton.addEventListener("click", async function(event) {
                 event.preventDefault();
-                const { error } = await supabaseClient.auth.signOut();
-                if (error) {
-                    console.error('Erro ao fazer logout:', error.message);
-                } else {
-                    showLoginPage();
-                }
+                await supabaseClient.auth.signOut();
+                showLoginPage();
             });
 
-
-            // --- Funções auxiliares ---
-            function showDashboard() {
-                loginPage.classList.add("hidden");
-                dashboardPage.classList.remove("hidden");
-                dashboardPage.classList.add("flex");
-                // renderCharts(); // Você pode adicionar sua função de renderizar gráficos aqui
+            // --- FUNÇÕES DE NAVEGAÇÃO E GRÁFICOS ---
+            function setActiveTab(targetId) {
+                contentSections.forEach((section) => {
+                    section.classList.add("hidden");
+                });
+                const targetSection = document.getElementById(targetId + "-content");
+                if (targetSection) {
+                    targetSection.classList.remove("hidden");
+                }
+                navLinks.forEach((navLink) => {
+                    navLink.classList.remove("bg-gray-700", "text-white", "font-semibold");
+                    navLink.classList.add("hover:bg-gray-800");
+                });
+                const activeLink = document.querySelector(`.nav-link[data-target="${targetId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add("bg-gray-700", "text-white", "font-semibold");
+                    activeLink.classList.remove("hover:bg-gray-800");
+                }
             }
 
-            function showLoginPage() {
-                dashboardPage.classList.add("hidden");
-                dashboardPage.classList.remove("flex");
-                loginPage.classList.remove("hidden");
-                loginPage.classList.add("flex");
-            }
-            
-            function setLoading(isLoading) {
-                if(isLoading) {
-                    loginButtonText.classList.add("hidden");
-                    loginSpinner.classList.remove("hidden");
-                    loginButton.disabled = true;
-                    loginError.classList.add("hidden");
-                } else {
-                    loginButtonText.classList.remove("hidden");
-                    loginSpinner.classList.add("hidden");
-                    loginButton.disabled = false;
+            navLinks.forEach((link) => {
+                link.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    const targetId = this.dataset.target;
+                    setActiveTab(targetId);
+                });
+            });
+
+            function renderCharts() {
+                const areaChartEl = document.querySelector("#area-chart");
+                if (areaChartEl && areaChartEl.childElementCount > 0) return;
+
+                if (areaChartEl) {
+                    const areaChartOptions = {
+                        series: [{ name: "Vendas", data: [3100, 4000, 2800, 5100, 4200, 10900] }],
+                        chart: { height: 350, type: "area", toolbar: { show: false }, zoom: { enabled: false } },
+                        dataLabels: { enabled: false }, stroke: { curve: "smooth" },
+                        xaxis: { categories: ["Fev", "Mar", "Abr", "Mai", "Jun", "Jul"] },
+                        tooltip: { x: { format: "MMM" }, y: { formatter: (val) => "R$ " + val.toFixed(2).replace(".", ",") } },
+                        colors: ["#3B82F6"],
+                    };
+                    const areaChart = new ApexCharts(areaChartEl, areaChartOptions);
+                    areaChart.render();
+                }
+
+                const barChartEl = document.querySelector("#bar-chart");
+                if (barChartEl) {
+                    const barChartOptions = {
+                        series: [{ name: "Unidades Vendidas", data: [400, 430, 448, 470, 540] }],
+                        chart: { type: "bar", height: 350, toolbar: { show: false } },
+                        plotOptions: { bar: { borderRadius: 4, horizontal: true } },
+                        dataLabels: { enabled: false },
+                        xaxis: { categories: ["Eletrônicos", "Moda", "Casa e Jardim", "Livros", "Esportes"] },
+                        colors: ["#10B981"],
+                        tooltip: { y: { formatter: (val) => val + " unidades" } },
+                    };
+                    const barChart = new ApexCharts(barChartEl, barChartOptions);
+                    barChart.render();
                 }
             }
         });
